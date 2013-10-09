@@ -48,9 +48,7 @@ class User extends BaseUser {
      **/
     protected $shipping_address;
     
-     /**
-     * @ORM\Column(type="string")
-     */
+   
      /**
      * @ORM\OneToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="billing_id", referencedColumnName="id")
