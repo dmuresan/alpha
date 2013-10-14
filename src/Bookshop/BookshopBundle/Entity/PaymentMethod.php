@@ -33,6 +33,9 @@ class PaymentMethod {
      */
     protected $name;
 
+//      public function __construct($id){
+//        $this->id=$id;
+//    }
 
     /**
      * Get id

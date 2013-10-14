@@ -1,0 +1,30 @@
+{% extends 'BookshopBookshopBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="main-container col2-right-layout">
+    <div class="main">
+        <div class="col-main">
+            <div class="page-title">
+                <h1>Checkout</h1>
+            </div>
+            <ol class="opc" id="checkoutSteps">
+                <li id="opc-review" class="section slide6 allow active">
+                    <div class="step-title">
+                        <span class="number">5</span>
+                        <h2>Order Review</h2>
+                        <a href="#">Edit</a>
+                    </div>
+                    <div id="checkout-step-review" class="step a-item">
+                        <div class="order-review" id="checkout-review-load"></div>
+                        <div class="buttons-set" id="review-buttons-container">
+                            <p class="back-link"><a href="javascript: window.location = '/checkout_payment.html';" ><small>« </small>Back</a></p>
+                            <button type="button" class="button"><span><span>Submit Order</span></span></button>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

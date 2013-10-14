@@ -37,4 +37,30 @@ BookshopBookshopBundle_product_process:
     pattern:  /product_process
     defaults: { _controller: BookshopBookshopBundle:Cart:processForm }
     requirements:
-        _method:  POST         
+        _method:  POST    
+        
+BookshopBookshopBundle_checkout_billing:
+    pattern: /checkout_billing
+    defaults: { _controller: BookshopBookshopBundle:Checkout:show }
+    
+BookshopBookshopBundle_checkout_shipping:
+    pattern: /checkout_shipping
+    defaults: { _controller: BookshopBookshopBundle:Checkout:checkoutShipping }
+    requirements:
+      _method: POST
+BookshopBookshopBundle_checkout_shippingMethod:
+    pattern: /checkout_shippingMethod
+    defaults: { _controller: BookshopBookshopBundle:Checkout:shippingMethod }
+    requirements:
+      _method: POST
+BookshopBookshopBundle_checkout_billingMethod:
+    pattern: /checkout_billingMethod
+    defaults: { _controller: BookshopBookshopBundle:Checkout:billingMethod }
+    requirements:
+      _method: POST
+      
+BookshopBooskhopBundle_checkout_success:
+    pattern: /checkout_success
+    defaults: { _controller: BookshopBookshopBundle:Checkout:success }
+    requirements:
+      _method: POST

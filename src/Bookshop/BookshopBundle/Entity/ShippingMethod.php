@@ -37,6 +37,10 @@ class ShippingMethod {
      */
     protected $price;
 
+    
+    public function __construct($id){
+        $this->id=$id;
+    }
 
     /**
      * Get id

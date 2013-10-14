@@ -1,0 +1,50 @@
+{% extends 'BookshopBookshopBundle::layout.html.twig' %}
+
+{% block container %}
+
+<div class="main-container col2-right-layout">
+                    <div class="main">
+                        <div class="col-main">
+                            <div class="page-title">
+                                <h1>Checkout</h1>
+                            </div>
+                            <ol class="opc" id="checkoutSteps">
+                                <li id="opc-payment" class="section slide5 allow active">
+                                    <div class="step-title">
+                                        <span class="number">4</span>
+                                        <h2>Payment Information</h2>
+                                        <a href="#">Edit</a>
+                                    </div>
+
+                                    <div id="checkout-step-payment" class="step a-item">
+
+                                        <form action="{{path('BookshopBooskhopBundle_checkout_success')}}" method="POST" id="co-payment-form">
+                                            <fieldset>
+                                                <dl class="sp-methods" id="checkout-payment-method-load">
+                                                    <dt>
+                                                        <input autocomplete="off" id="p_method_checkmo" value="1" name="payment[method]" title="Check / Money order" class="radio" type="radio">
+                                                            <label for="p_method_checkmo">Check / Money order 1</label>
+                                                    </dt>
+                                                    <dt>
+                                                        <input autocomplete="off" id="p_method_checkmo" value="2" name="payment[method]" title="Check / Money order" class="radio" type="radio">
+                                                            <label for="p_method_checkmo">Check / Money order 2</label>
+                                                    </dt>
+                                                </dl>
+                                            </fieldset>
+                                        
+                                        <div class="buttons-set" id="payment-buttons-container">
+                                            <p class="required">* Required Fields</p>
+                                            <p class="back-link"><a href="javascript: window.location = '/checkout_shipping_method.html';" ><small>« </small>Back</a></p>
+                                            <button type="submit"><span><span>Continue</span></span></button>
+                                        </div>
+                                        </form>        
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+
+
+{% endblock %}

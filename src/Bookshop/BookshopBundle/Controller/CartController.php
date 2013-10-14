@@ -42,7 +42,7 @@ class CartController extends Controller {
                 $cart->removeCartItem($item);
                 $item->setCart(null);
                 $em->flush();
-                return $this->redirect($this->getRequest()->headers->get("referer"));
+                
             }
         }
         return $this->redirect($this->getRequest()->headers->get("referer"));
@@ -65,6 +65,7 @@ class CartController extends Controller {
                 $em->flush();
                 return true;
             }
+            
         }
     }
 
@@ -83,6 +84,7 @@ class CartController extends Controller {
     }
 
     public function processFormAction() {
+        
         if (isset($_POST['update_cart_action'])) {
             if ($_POST['update_cart_action'] == 'update_qty') {
                 return $this->updateAction();

@@ -42,17 +42,9 @@ class User extends BaseUser {
      */
     protected $mobile;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Address")
-     * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
-     **/
     protected $shipping_address;
     
    
-     /**
-     * @ORM\OneToOne(targetEntity="Address")
-     * @ORM\JoinColumn(name="billing_id", referencedColumnName="id")
-     **/
     protected $billing_address;
     
       
@@ -63,12 +55,15 @@ class User extends BaseUser {
         // your ow
     }
 
+
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -78,9 +73,10 @@ class User extends BaseUser {
      * @param string $firstname
      * @return User
      */
-    public function setFirstname($firstname) {
+    public function setFirstname($firstname)
+    {
         $this->firstname = $firstname;
-
+    
         return $this;
     }
 
@@ -89,57 +85,15 @@ class User extends BaseUser {
      *
      * @return string 
      */
-    public function getFirstname() {
+    public function getFirstname()
+    {
         return $this->firstname;
     }
 
     /**
-     * Set lastname
-     *
-     * @param string $lastname
-     * @return User
-     */
-    public function setLastname($lastname) {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string 
-     */
-    public function getLastname() {
-        return $this->lastname;
-    }
-
-    /**
-     * Set mobile
-     *
-     * @param string $mobile
-     * @return User
-     */
-    public function setMobile($mobile) {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    /**
-     * Get mobile
-     *
-     * @return string 
-     */
-    public function getMobile() {
-        return $this->mobile;
-    }
-
-
-    /**
      * Set gender
      *
-     * @param string $gender
+     * @param integer $gender
      * @return User
      */
     public function setGender($gender)
@@ -152,7 +106,7 @@ class User extends BaseUser {
     /**
      * Get gender
      *
-     * @return string 
+     * @return integer 
      */
     public function getGender()
     {
@@ -160,94 +114,48 @@ class User extends BaseUser {
     }
 
     /**
-     * Set cart
+     * Set lastname
      *
-     * @param integer $cart
+     * @param string $lastname
      * @return User
      */
-    public function setCart($cart)
+    public function setLastname($lastname)
     {
-        $this->cart = $cart;
+        $this->lastname = $lastname;
     
         return $this;
     }
 
     /**
-     * Get cart
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param integer $mobile
+     * @return User
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+    
+        return $this;
+    }
+
+    /**
+     * Get mobile
      *
      * @return integer 
      */
-    public function getCart()
+    public function getMobile()
     {
-        return $this->cart;
-    }
-
-    /**
-     * Add cart
-     *
-     * @param \Bookshop\BookshopBundle\Entity\Cart $cart
-     * @return User
-     */
-    public function addCart(\Bookshop\BookshopBundle\Entity\Cart $cart)
-    {
-        $this->cart[] = $cart;
-    
-        return $this;
-    }
-
-    /**
-     * Remove cart
-     *
-     * @param \Bookshop\BookshopBundle\Entity\Cart $cart
-     */
-    public function removeCart(\Bookshop\BookshopBundle\Entity\Cart $cart)
-    {
-        $this->cart->removeElement($cart);
-    }
-
-    /**
-     * Set shipping_address
-     *
-     * @param string $shippingAddress
-     * @return User
-     */
-    public function setShippingAddress($shippingAddress)
-    {
-        $this->shipping_address = $shippingAddress;
-    
-        return $this;
-    }
-
-    /**
-     * Get shipping_address
-     *
-     * @return string 
-     */
-    public function getShippingAddress()
-    {
-        return $this->shipping_address;
-    }
-
-    /**
-     * Set billing_address
-     *
-     * @param string $billingAddress
-     * @return User
-     */
-    public function setBillingAddress($billingAddress)
-    {
-        $this->billing_address = $billingAddress;
-    
-        return $this;
-    }
-
-    /**
-     * Get billing_address
-     *
-     * @return string 
-     */
-    public function getBillingAddress()
-    {
-        return $this->billing_address;
+        return $this->mobile;
     }
 }

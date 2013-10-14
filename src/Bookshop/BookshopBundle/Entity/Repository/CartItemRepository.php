@@ -17,7 +17,7 @@ class CartItemRepository extends EntityRepository
                 ->select('c')
                 ->where('c.cart= :cart_id')
                 ->setParameter('cart_id',$cartId);
-        return $qb->getQuery()
+        return $qd->getQuery()
                   ->getResult();
         
     }

@@ -8,7 +8,7 @@ class PageController extends Controller {
 
     public function indexAction() {
        
-
+        var_dump($this->GetUser());
         $em = $this->getDoctrine()
                 ->getManager();
 

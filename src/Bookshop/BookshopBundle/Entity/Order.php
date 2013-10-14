@@ -16,68 +16,60 @@ namespace Bookshop\BookshopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Bookshop\BookshopBundle\Entity\Repository\OrderRepository")
  * @ORM\Table(name="Orders")
  */
 class Order {
-/**
- *
- * @ORM\ID
- * @ORM\Column(type="integer")
- * @ORM\GeneratedValue(strategy="AUTO") 
- */
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
- /**
-     * @ORM\OneToOne(targetEntity="User")
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User",  cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      **/
-    protected $user_id;
-  /**
+    protected $user;
+          /**
      * @ORM\OneToOne(targetEntity="Address")
-     * @ORM\JoinColumn(name="billing_id", referencedColumnName="id")
-     **/
-    protected $billing_address_id;
-  /**
+     * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
+     */
+    protected $billing_address;
+          /**
      * @ORM\OneToOne(targetEntity="Address")
-     * @ORM\JoinColumn(name="shipping_id", referencedColumnName="id")
-     **/
-    protected $shipping_address_id;
- /**
+     * @ORM\JoinColumn(name="shipping_address_id", referencedColumnName="id")
+     */
+    protected $shipping_address;
+          /**
      * @ORM\OneToOne(targetEntity="Cart")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
-     **/
-    protected $cart_id;
-    /**
-     * @ORM\Column(type="integer")
      */
+    protected $cart;
     protected $total;
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $date;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $state_id;
-     /**
-     * @ORM\OneToOne(targetEntity="ShippingMethod")
-     * @ORM\JoinColumn(name="shippingMethod_id", referencedColumnName="id")
-     **/
-    protected $shipping_method_id;
-     /**
-     * @ORM\OneToOne(targetEntity="Cart")
-     * @ORM\JoinColumn(name="paymentMethod_id", referencedColumnName="id")
-     **/
-    protected $payment_method_id;
-    protected $paymentmethod;
-    protected $shippingmethod;
-    protected $shippingaddress;
-    protected $billingaddress;
-    protected $user;
     protected $state;
 
+    protected $shipping_method;
 
-    
+    protected $payment_method;
+
+
+    public function setShippingMethod($shipping_method){
+        $this->shipping_method=$shipping_method;
+    }
+    public function getShippingMethod(){
+        return $this->shipping_method;
+        
+    }
+    public function getBillingMethod(){
+        return $this->payment_method;
+    }
+    public function setBillingMethod($billing_method){
+        $this->billing_method=$billing_method;
+    }
 
     /**
      * Get id
@@ -90,209 +82,95 @@ class Order {
     }
 
     /**
-     * Set total
+     * Set user
      *
-     * @param integer $total
+     * @param \Bookshop\BookshopBundle\Entity\User $user
      * @return Order
      */
-    public function setTotal($total)
+    public function setUser(\Bookshop\BookshopBundle\Entity\User $user = null)
     {
-        $this->total = $total;
+        $this->user = $user;
     
         return $this;
     }
 
     /**
-     * Get total
-     *
-     * @return integer 
-     */
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-    /**
-     * Set date
-     *
-     * @param string $date
-     * @return Order
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-    
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return string 
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set state_id
-     *
-     * @param integer $stateId
-     * @return Order
-     */
-    public function setStateId($stateId)
-    {
-        $this->state_id = $stateId;
-    
-        return $this;
-    }
-
-    /**
-     * Get state_id
-     *
-     * @return integer 
-     */
-    public function getStateId()
-    {
-        return $this->state_id;
-    }
-
-    /**
-     * Set user_id
-     *
-     * @param \Bookshop\BookshopBundle\Entity\User $userId
-     * @return Order
-     */
-    public function setUserId(\Bookshop\BookshopBundle\Entity\User $userId = null)
-    {
-        $this->user_id = $userId;
-    
-        return $this;
-    }
-
-    /**
-     * Get user_id
+     * Get user
      *
      * @return \Bookshop\BookshopBundle\Entity\User 
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->user_id;
+        return $this->user;
     }
 
     /**
-     * Set billing_address_id
+     * Set billing_address
      *
-     * @param \Bookshop\BookshopBundle\Entity\Address $billingAddressId
+     * @param \Bookshop\BookshopBundle\Entity\Address $billingAddress
      * @return Order
      */
-    public function setBillingAddressId(\Bookshop\BookshopBundle\Entity\Address $billingAddressId = null)
+    public function setBillingAddress(\Bookshop\BookshopBundle\Entity\Address $billingAddress = null)
     {
-        $this->billing_address_id = $billingAddressId;
+        $this->billing_address = $billingAddress;
     
         return $this;
     }
 
     /**
-     * Get billing_address_id
+     * Get billing_address
      *
      * @return \Bookshop\BookshopBundle\Entity\Address 
      */
-    public function getBillingAddressId()
+    public function getBillingAddress()
     {
-        return $this->billing_address_id;
+        return $this->billing_address;
     }
 
     /**
-     * Set shipping_address_id
+     * Set shipping_address
      *
-     * @param \Bookshop\BookshopBundle\Entity\Address $shippingAddressId
+     * @param \Bookshop\BookshopBundle\Entity\Address $shippingAddress
      * @return Order
      */
-    public function setShippingAddressId(\Bookshop\BookshopBundle\Entity\Address $shippingAddressId = null)
+    public function setShippingAddress(\Bookshop\BookshopBundle\Entity\Address $shippingAddress = null)
     {
-        $this->shipping_address_id = $shippingAddressId;
+        $this->shipping_address = $shippingAddress;
     
         return $this;
     }
 
     /**
-     * Get shipping_address_id
+     * Get shipping_address
      *
      * @return \Bookshop\BookshopBundle\Entity\Address 
      */
-    public function getShippingAddressId()
+    public function getShippingAddress()
     {
-        return $this->shipping_address_id;
+        return $this->shipping_address;
     }
 
     /**
-     * Set cart_id
+     * Set cart
      *
-     * @param \Bookshop\BookshopBundle\Entity\Cart $cartId
+     * @param \Bookshop\BookshopBundle\Entity\Cart $cart
      * @return Order
      */
-    public function setCartId(\Bookshop\BookshopBundle\Entity\Cart $cartId = null)
+    public function setCart(\Bookshop\BookshopBundle\Entity\Cart $cart = null)
     {
-        $this->cart_id = $cartId;
+        $this->cart = $cart;
     
         return $this;
     }
 
     /**
-     * Get cart_id
+     * Get cart
      *
      * @return \Bookshop\BookshopBundle\Entity\Cart 
      */
-    public function getCartId()
+    public function getCart()
     {
-        return $this->cart_id;
+        return $this->cart;
     }
-
-    /**
-     * Set shipping_method_id
-     *
-     * @param \Bookshop\BookshopBundle\Entity\ShippingMethod $shippingMethodId
-     * @return Order
-     */
-    public function setShippingMethodId(\Bookshop\BookshopBundle\Entity\ShippingMethod $shippingMethodId = null)
-    {
-        $this->shipping_method_id = $shippingMethodId;
     
-        return $this;
-    }
-
-    /**
-     * Get shipping_method_id
-     *
-     * @return \Bookshop\BookshopBundle\Entity\ShippingMethod 
-     */
-    public function getShippingMethodId()
-    {
-        return $this->shipping_method_id;
-    }
-
-    /**
-     * Set payment_method_id
-     *
-     * @param \Bookshop\BookshopBundle\Entity\Cart $paymentMethodId
-     * @return Order
-     */
-    public function setPaymentMethodId(\Bookshop\BookshopBundle\Entity\Cart $paymentMethodId = null)
-    {
-        $this->payment_method_id = $paymentMethodId;
-    
-        return $this;
-    }
-
-    /**
-     * Get payment_method_id
-     *
-     * @return \Bookshop\BookshopBundle\Entity\Cart 
-     */
-    public function getPaymentMethodId()
-    {
-        return $this->payment_method_id;
-    }
 }
