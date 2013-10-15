@@ -51,9 +51,15 @@ class Order {
     protected $total;
     protected $date;
     protected $state;
-
+   /**
+     * @ORM\OneToOne(targetEntity="ShippingMethod")
+     * @ORM\JoinColumn(name="shipping_method_id", referencedColumnName="id")
+     */
     protected $shipping_method;
-
+/**
+     * @ORM\OneToOne(targetEntity="PaymentMethod")
+     * @ORM\JoinColumn(name="billing_method_id", referencedColumnName="id")
+     */
     protected $payment_method;
 
 
@@ -173,4 +179,27 @@ class Order {
         return $this->cart;
     }
     
+
+    /**
+     * Set payment_method
+     *
+     * @param \Bookshop\BookshopBundle\Entity\BillingMethod $paymentMethod
+     * @return Order
+     */
+    public function setPaymentMethod(\Bookshop\BookshopBundle\Entity\PaymentMethod $paymentMethod = null)
+    {
+        $this->payment_method = $paymentMethod;
+    
+        return $this;
+    }
+
+    /**
+     * Get payment_method
+     *
+     * @return \Bookshop\BookshopBundle\Entity\BillingMethod 
+     */
+    public function getPaymentMethod()
+    {
+        return $this->payment_method;
+    }
 }

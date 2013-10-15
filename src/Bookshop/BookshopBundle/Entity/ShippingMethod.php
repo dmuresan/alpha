@@ -16,7 +16,7 @@ namespace Bookshop\BookshopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Bookshop\BookshopBundle\Entity\Repository\ShippingMethodRepository")
  * @ORM\Table(name="shipping_methods")
  */
 class ShippingMethod {

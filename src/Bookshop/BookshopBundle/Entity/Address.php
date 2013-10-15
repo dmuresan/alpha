@@ -42,6 +42,18 @@ class Address {
     protected $email;
 
 
+    public function init($street, $city, $country, $email, $firstname, $lastname){
+        
+        $this->setAddress($street);
+        $this->setCity($city);
+        $this->setCountry($country);
+        $this->setEmail($email);
+        $this->setFirstname($firstname);
+        $this->setLastname($lastname);
+        
+    }
+    
+            
     /**
      * Get id
      *

@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of CheckoutControler
  *
@@ -21,35 +15,39 @@ class CheckoutController extends Controller {
     public function checkoutShippingAction() {
         $this->process($_POST['billing']['street']['0'] . $_POST['billing']['street']['1'], $_POST['billing']['city']
                 , $_POST['billing']['country_id'], $_POST['billing']['email'], $_POST['bookshop_bookshopbundle_address']['firstname']
-                , $_POST['billing']['lastname'], true
+                , $_POST['billing']['lastname']
         );
         $form = $this->createForm(new \Bookshop\BookshopBundle\Form\AddressType());
+        
         return $this->render('BookshopBookshopBundle:Page:CheckoutShipping.html.twig', array(
                     'form' => $form->createView()
         ));
     }
 
-    protected function process($street, $city, $country, $email, $firstname, $lastname, $initiate = false) {
+    protected function process($street, $city, $country, $email, $firstname, $lastname, $shipping = false) {
         $em = $this->getDoctrine()
                 ->getManager();
         $address = new \Bookshop\BookshopBundle\Entity\Address();
         $em->persist($address);
-        $address->setAddress($street);
-        $address->setCity($city);
-        $address->setCountry($country);
-        $address->setEmail($email);
-        $address->setFirstname($firstname);
-        $address->setLastname($lastname);
-        if ($initiate) {
+        $address->init($street, $city, $country, $email, $firstname, $lastname);
+        $order = $em->getRepository('BookshopBookshopBundle:Order')->getOrderForUser($this->getUser());
+        
+        if (sizeof($order) == 0) {
             $order = new \Bookshop\BookshopBundle\Entity\Order();
-            $em->persist($order);
-            $order->setShippingAddress($address);
             $order->setUser($this->getUser());
+            $cart=$em->getRepository('BookshopBookshopBundle:Cart')->getCartForUser($this->getUser());
+            $order->setCart($cart);
+            $em->persist($order);
+        } 
+        
+        if ($shipping) {
+            $order->setShippingAddress($address);
         } else {
-            $order = $em->getRepository('BookshopBookshopBundle:Order')->getOrderForUser($this->getUser());
-            $order[0]->setBillingAddress($address);
+            $order->setBillingAddress($address);
         }
+        
         $em->flush();
+        
         return $address;
     }
 
@@ -67,30 +65,35 @@ class CheckoutController extends Controller {
                 ->getManager();
         $order = $em->getRepository('BookshopBookshopBundle:Order')->getOrderForUser($this->getUser());
         if ($shipping) {
-            $order[sizeof($order)-1]->setShippingMethod($_POST['payment']['method']);
+            $shipping_method = $em->getRepository('BookshopBookshopBundle:ShippingMethod')->getShippingMethod($_POST['payment']['method']);
+            $order->setShippingMethod($shipping_method);
         } else {
-            $order[sizeof($order)-1]->setBillingMethod($_POST['payment']['method']);
+            $payment_method = $em->getRepository('BookshopBookshopBundle:PaymentMethod')->getPaymentMethod($_POST['payment']['method']);
+            $order->setPaymentMethod($payment_method);
         }
         $em->flush();
     }
 
     public function shippingMethodAction() {
-         $this->process($_POST['billing']['street']['0'] . $_POST['billing']['street']['1'], $_POST['billing']['city']
+        $this->process($_POST['billing']['street']['0'] . $_POST['billing']['street']['1'], $_POST['billing']['city']
                 , $_POST['billing']['country_id'], $_POST['billing']['email'], $_POST['bookshop_bookshopbundle_address']['firstname']
                 , $_POST['billing']['lastname'], true
         );
+        
         return $this->render('BookshopBookshopBundle:Page:ShippingMethod.html.twig', array());
     }
 
     public function billingMethodAction() {
         $this->shippingandbilling(true);
+        
         return $this->render("BookshopBookshopBundle:Page:BillingMethod.html.twig", array());
     }
-    public function successAction(){
+
+    public function successAction() {
         $this->shippingandbilling();
-        return $this->render("BookshopBookshopBundle:Page:Success.html.twig",array());
+        
+        return $this->render("BookshopBookshopBundle:Page:Success.html.twig", array());
     }
 
 }
 
-?>
